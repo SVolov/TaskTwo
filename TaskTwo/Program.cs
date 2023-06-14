@@ -5,24 +5,26 @@ class Program
     static void Main(string[] args)
     {
         Console.WriteLine("Enter an integer in decimal:");
-        int number = Convert.ToInt32(Console.ReadLine());
+        int number;
+        while (!int.TryParse(Console.ReadLine(), out number))
+        {
+            Console.WriteLine("Invalid input. Please enter a valid integer:");
+        }
 
         Console.WriteLine("Enter the base of the new number system (from 2 to 20):");
-        int baseNumber = Convert.ToInt32(Console.ReadLine());
+        byte baseNumber;
+        while (!byte.TryParse(Console.ReadLine(), out baseNumber) || baseNumber < 2 || baseNumber > 20)
+        {
+            Console.WriteLine("Invalid input. Please enter a valid base (from 2 to 20):");
+        }
 
         string convertedNumber = ConvertToBase(number, baseNumber);
         Console.WriteLine($"Conversion result: {convertedNumber}");
     }
 
-    static string ConvertToBase(int number, int baseNumber)
+    static string ConvertToBase(int number, byte baseNumber)
     {
         const string digits = "0123456789ABCDEFGHIJ";
-
-        if (baseNumber < 2 || baseNumber > 20)
-        {
-            Console.WriteLine("The base of the number system must be between 2 and 20.");
-            return string.Empty;
-        }
 
         if (number == 0)
         {
